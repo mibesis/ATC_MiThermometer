@@ -6,8 +6,8 @@ TEL_PATH ?= ../..
 
 PROJECT_NAME := ATC_Thermometer
 
-PROJECT_PATH := ./src
-OUT_PATH :=./out
+PROJECT_PATH ?= ./src
+OUT_PATH ?= ./out
 
 ifneq ($(TEL_PATH)/make/makefile, $(wildcard $(TEL_PATH)/make/makefile))
 $(error "Please check SDK_Path")
@@ -64,7 +64,7 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 LST_FILE := $(OUT_PATH)/$(PROJECT_NAME).lst
-BIN_FILE := $(OUT_PATH)/../$(PROJECT_NAME).bin
+BIN_FILE := $(OUT_PATH)/$(PROJECT_NAME).bin
 ELF_FILE := $(OUT_PATH)/$(PROJECT_NAME).elf
 
 SIZEDUMMY := sizedummy
@@ -105,7 +105,7 @@ $(LST_FILE): $(ELF_FILE)
 $(BIN_FILE): $(ELF_FILE)
 	@echo 'Create Flash image (binary format)'
 	@tc32-elf-objcopy -v -O binary $(ELF_FILE)  $(BIN_FILE)
-	@$(PROJECT_PATH)/../utils/tl_check_fw2.exe $(BIN_FILE)
+	@python3 $(TEL_PATH)/make/tl_firmware_tools.py add_crc $(BIN_FILE)
 	@echo 'Finished building: $@'
 	@echo ' '
 
