@@ -1,4 +1,11 @@
-# Xiaomi Mijia (LYWSD03MMC HW: [B1.4](https://github.com/pvvx/ATC_MiThermometer/tree/master/BoardPinout), [B1.6](https://github.com/pvvx/ATC_MiThermometer/issues/125), [B1.7](https://github.com/pvvx/ATC_MiThermometer/issues/145), [B1.9](https://github.com/pvvx/ATC_MiThermometer/issues/125)) & Xiaomi Miaomiaoce ([MHO-C401](https://pvvx.github.io/MHO_C401)) & [CGG1](https://pvvx.github.io/CGG1) Mijia Bluetooth Thermometer Firmware
+# Introduction
+
+What is new:
+1. To build container is used - Podman
+2. run with `make -f Makefile`
+
+
+Xiaomi Mijia (LYWSD03MMC HW: [B1.4](https://github.com/pvvx/ATC_MiThermometer/tree/master/BoardPinout), [B1.6](https://github.com/pvvx/ATC_MiThermometer/issues/125), [B1.7](https://github.com/pvvx/ATC_MiThermometer/issues/145), [B1.9](https://github.com/pvvx/ATC_MiThermometer/issues/125)) & Xiaomi Miaomiaoce ([MHO-C401](https://pvvx.github.io/MHO_C401)) & [CGG1](https://pvvx.github.io/CGG1) Mijia Bluetooth Thermometer Firmware
 
 This repository contains custom firmware for several Bluetooth Thermometer & Hygrometer devices.
 
@@ -23,31 +30,31 @@ The custom firmware can be flashed _via a modern browser_ and _over-the-air (OTA
 <!-- TOC depthFrom:2 depthTo:3 -->
 
 - [Getting Started](#getting-started)
-    - [Flashing or Updating the Firmware (OTA)](#flashing-or-updating-the-firmware-ota)
-    - [Configuration](#configuration)
+  - [Flashing or Updating the Firmware (OTA)](#flashing-or-updating-the-firmware-ota)
+  - [Configuration](#configuration)
 - [Firmware](#firmware)
-    - [Firmware Binaries](#firmware-binaries)
-    - [Firmware version history](#firmware-version-history)
+  - [Firmware Binaries](#firmware-binaries)
+  - [Firmware version history](#firmware-version-history)
 - [Applications](#applications)
-    - [Reading Measurements from Flash](#reading-measurements-from-flash)
-    - [Reading Measurements in Connected Mode](#reading-measurements-in-connected-mode)
-    - [Reading Measurements in Advertising Mode](#reading-measurements-in-advertising-mode)
+  - [Reading Measurements from Flash](#reading-measurements-from-flash)
+  - [Reading Measurements in Connected Mode](#reading-measurements-in-connected-mode)
+  - [Reading Measurements in Advertising Mode](#reading-measurements-in-advertising-mode)
 - [Technical specifications](#technical-specifications)
-    - [Average power consumption](#average-power-consumption)
-    - [Bluetooth Advertising Formats](#bluetooth-advertising-formats)
-    - [Bluetooth Connection Mode](#bluetooth-connection-mode)
-    - [Temperature or humidity trigger on GPIO PA5 (label on the "reset" pin)](#temperature-or-humidity-trigger-on-gpio-pa5-label-on-the-reset-pin)
-    - [Reed Switch on GPIO PA6 (label on the "P8" pin)](#reed-switch-on-gpio-pa6-label-on-the-p8-pin)
-    - [Interface for receiving and displaying data on the LCD.](#interface-for-receiving-and-displaying-data-on-the-lcd)
-    - [The USB-COM adapter writes the firmware in explorer. Web version.](#the-usb-com-adapter-writes-the-firmware-in-explorer-web-version)
+  - [Average power consumption](#average-power-consumption)
+  - [Bluetooth Advertising Formats](#bluetooth-advertising-formats)
+  - [Bluetooth Connection Mode](#bluetooth-connection-mode)
+  - [Temperature or humidity trigger on GPIO PA5 (label on the "reset" pin)](#temperature-or-humidity-trigger-on-gpio-pa5-label-on-the-reset-pin)
+  - [Reed Switch on GPIO PA6 (label on the "P8" pin)](#reed-switch-on-gpio-pa6-label-on-the-p8-pin)
+  - [Interface for receiving and displaying data on the LCD.](#interface-for-receiving-and-displaying-data-on-the-lcd)
+  - [The USB-COM adapter writes the firmware in explorer. Web version.](#the-usb-com-adapter-writes-the-firmware-in-explorer-web-version)
 - [Related Work](#related-work)
 - [Resources & Links](#resources--links)
-    - [CJMCU-2557 BQ25570](#cjmcu-2557-bq25570)
+  - [CJMCU-2557 BQ25570](#cjmcu-2557-bq25570)
 
 <!-- /TOC -->
 
 
-## Getting Started 
+## Getting Started
 
 You can conveniently flash, update and configure the bluetooth thermometers remotely using a bluetooth connection and a modern web browser.
 
@@ -57,12 +64,12 @@ To flash or update the firmware, use a Google Chrome, Microsoft Edge or Opera Br
 
 1. Go to the [Over-the-air Webupdater Page `TelinkMiFlasher.html`](https://pvvx.github.io/ATC_MiThermometer/TelinkMiFlasher.html) *
 2. If using Linux: Ensure you enabled "experimental web platform features". Therefore copy the according link (i.e. `chrome://flags/#enable-experimental-web-platform-features` for Chrome), open a new browser tab, paste the copied URL. Now sten the _Experimental Web Platform features_ flag to _Enabled_. Then **restart the browser**.
-3. In the Telink Flasher Page: Press `Connect`: The browser should open a popup with visible Bluetooth devices. Choose the according target device (i.e. `LYWSD03MMC`) to pair. 
+3. In the Telink Flasher Page: Press `Connect`: The browser should open a popup with visible Bluetooth devices. Choose the according target device (i.e. `LYWSD03MMC`) to pair.
 4. After connection is established a _Do Acivation_ button appears. Press this button to start the decryption key process.
 5. Now you can press the _Custom Firmware ver x.x_ button to directly flash the custom firmware. Alternatively you can choose a specific firmware binary (i.e. the original firmware) via the file chooser
 6. Press _Start Flashing_.
 
- * Use [TelinkOTA](https://pvvx.github.io/ATC_MiThermometer/TelinkOTA.html) to flash old or alternative versions ([ATC1441](https://atc1441.github.io/TelinkFlasher.html)). This is a program for OTA projects with Telink SDK, no third-party (mijia) protections.
+* Use [TelinkOTA](https://pvvx.github.io/ATC_MiThermometer/TelinkOTA.html) to flash old or alternative versions ([ATC1441](https://atc1441.github.io/TelinkFlasher.html)). This is a program for OTA projects with Telink SDK, no third-party (mijia) protections.
 
 ### Configuration
 After you have flashed the firmware, the device has changed it's bluetooth name to something like `ATC_F02AED`. Using the [`TelinkMiFlasher.html`](https://pvvx.github.io/ATC_MiThermometer/TelinkMiFlasher.html) you have various configuration options.
@@ -75,7 +82,7 @@ After you have flashed the firmware, the device has changed it's bluetooth name 
 
 | Option | Description |
 | ------ | ----------- |
-| _Temperature and Humidity offset_ | Enter a value to correct the offset of the Temperature or Humidity displayed: For example `-1.4` will decrease the Temperature by 1.4°
+| _Temperature and Humidity offset_ | Enter a value to correct the offset of the Temperature or Humidity displayed: For example `-1.4` will decrease the Temperature by 1.4ï¿½
 | _Smiley or Comfort_ | Choose a static smiley or check the "Comfort" Radio box to change the smiley depending on current Temperature and Humidity. |
 | _Comfort Parameters_ | Defines the Lower (Lo) and Upper (Hi) Range for Temperature and Humidity interpreted as comfort zone. In the default configuration a smiley will appear.
 | _Advertising Type_ | Type of supported [Bluetooth Advertising Formats](#bluetooth-advertising-formats).
@@ -85,7 +92,7 @@ After you have flashed the firmware, the device has changed it's bluetooth name 
 
 **Example of LCD display modes**
 
-You can configure different LCD Display modes using _Comfort, Show batt_ and _Clock_ configuration checkboxes. The enabled LCD Display Modes will appear one-by-one in a loop. 
+You can configure different LCD Display modes using _Comfort, Show batt_ and _Clock_ configuration checkboxes. The enabled LCD Display Modes will appear one-by-one in a loop.
 
 [![YoutubeVideo](https://img.youtube.com/vi/HzYh1vq8ikM/0.jpg)](https://youtu.be/HzYh1vq8ikM)
 
@@ -169,7 +176,7 @@ Setting the value to 0 disable logging to internal storage.
 [GraphAtc2.html](https://pvvx.github.io/ATC_MiThermometer/GraphAtc2.html)
 [DevPoint.html](https://pvvx.github.io/ATC_MiThermometer/DevPoint.html)
 
-![GraphAtc_html](https://github.com/pvvx/ATC_MiThermometer/blob/master/img/GraphAtc_html.gif) 
+![GraphAtc_html](https://github.com/pvvx/ATC_MiThermometer/blob/master/img/GraphAtc_html.gif)
 
 ### Reading Measurements in Advertising Mode
 This requires the _Experimental Web Platform Features_ flag enabled in your browser. See [Flashing or Updating the Firmware (OTA)](#flashing-or-updating-the-firmware-ota).
@@ -204,10 +211,10 @@ The Firmware can be configured to support one of four different Bluetooth advert
 
 You can also configure to transferring everything in turn (round-robin)
 #### atc1441 format:
-UUID 0x181A - size 16: [atc1441 format](https://github.com/atc1441/ATC_MiThermometer#advertising-format-of-the-custom-firmware) 
+UUID 0x181A - size 16: [atc1441 format](https://github.com/atc1441/ATC_MiThermometer#advertising-format-of-the-custom-firmware)
 
-#### Custom format (all data little-endian):  
-UUID 0x181A - size 19: Custom format (all data little-endian):  
+#### Custom format (all data little-endian):
+UUID 0x181A - size 19: Custom format (all data little-endian):
 
    ```c
    uint8_t     size;   // = 19
@@ -242,30 +249,30 @@ UUID 0x181A - size 19: Custom format (all data little-endian):
 
 ### Bluetooth Connection Mode
 + Primary Service - Environmental Sensing Service (0x181A):
- * Characteristic UUID [0x2A1F](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.temperature_celsius.xml) - Notify temperature x0.1C
- * Characteristic UUID [0x2A6E](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.temperature.xml) - Notify temperature x0.01C
- * Characteristic UUID [0x2A6F](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.humidity.xml) - Notify about humidity x0.01%
+* Characteristic UUID [0x2A1F](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.temperature_celsius.xml) - Notify temperature x0.1C
+* Characteristic UUID [0x2A6E](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.temperature.xml) - Notify temperature x0.01C
+* Characteristic UUID [0x2A6F](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.humidity.xml) - Notify about humidity x0.01%
 + Primary Service - Battery Service (0x180F):
- * Characteristic UUID [0x2A19](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.battery_level.xml) - Notify the battery charge level 0..99%
+* Characteristic UUID [0x2A19](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.battery_level.xml) - Notify the battery charge level 0..99%
 + Primary Service (0x1F10):
- * Characteristic UUID [0x1F1F](https://github.com/pvvx/ATC_MiThermometer#primary-service-uuid-0x1f10-characteristic-uuid-0x1f1f) - Notify, frame id 0x33 (configuring or making a request): temperature x0.01C, humidity x0.01%, battery charge level 0..100%, battery voltage in mV, GPIO-pin flags and triggers.
+* Characteristic UUID [0x1F1F](https://github.com/pvvx/ATC_MiThermometer#primary-service-uuid-0x1f10-characteristic-uuid-0x1f1f) - Notify, frame id 0x33 (configuring or making a request): temperature x0.01C, humidity x0.01%, battery charge level 0..100%, battery voltage in mV, GPIO-pin flags and triggers.
 
 ### Temperature or humidity trigger on GPIO PA5 (label on the "reset" pin)
 
-Xiaomi LYWSD03MMC has a PCB soldering test point. Available without disassembling the case and [marked "Reset"](https://github.com/pvvx/ATC_MiThermometer/tree/master/BoardPinout). 
-Use as a trigger output with adjustable temperature and / or humidity hysteresis. 
+Xiaomi LYWSD03MMC has a PCB soldering test point. Available without disassembling the case and [marked "Reset"](https://github.com/pvvx/ATC_MiThermometer/tree/master/BoardPinout).
+Use as a trigger output with adjustable temperature and / or humidity hysteresis.
 Hysteresis and thresholds are set in TelinkMiFlasher.html. The output status is displayed in the advertising package.
 
 ![trg_menu](https://github.com/pvvx/ATC_MiThermometer/blob/master/img/trg_menu.gif)
 
 ![trg_grf](https://github.com/pvvx/ATC_MiThermometer/blob/master/img/trg_grf.gif)
 
-Hysteresis: 
-> * =0 off, 
-> * if less than zero - activation on decrease, 
+Hysteresis:
+> * =0 off,
+> * if less than zero - activation on decrease,
 > * if more than zero - activation on excess
 
-Setting the pin to "1" or "0" works if both hysteresis are set to zero (TRG off). 
+Setting the pin to "1" or "0" works if both hysteresis are set to zero (TRG off).
 
 ![OnOff](https://github.com/pvvx/ATC_MiThermometer/blob/master/img/OnOff.gif)
 
@@ -280,13 +287,13 @@ The state of the reed switch is transferred to the advertising package.
 For CGG1 - GPIO_PD3, MHO_C401 - no free pins.
 
 ### Interface for receiving and displaying data on the LCD.
->* LCD shows: 
-> * Big number: -99.5..1999.5 
+>* LCD shows:
+> * Big number: -99.5..1999.5
 > * Small number: -9..99
 > * Smiley, battery, degrees
 > * Setting the display time limit in sec
 
-![ShowData](https://github.com/pvvx/ATC_MiThermometer/blob/master/img/ShowData.gif) 
+![ShowData](https://github.com/pvvx/ATC_MiThermometer/blob/master/img/ShowData.gif)
 
 ### The USB-COM adapter writes the firmware in explorer. Web version.
 >* Connect only TX-SWS and GND wires.
@@ -297,9 +304,9 @@ For CGG1 - GPIO_PD3, MHO_C401 - no free pins.
 
 
 #### Chipset LYWSD03MMC HW:B1.4
-> * TLSR8251F512ET24 (TLSR8258 in 24-pin TQFN). SoC: TC32 32-bit MCU 48Mhz, 64 KiB SRAM, 512 KiB Flash (GD25LE40C), Bluetooth 5.0: Mesh, 6LoWPAN, Zigbee, RF4CE, HomeKit, Long Range, Operating temperature: -40°C to +85°C, Power supply: 1.8V to 3.6V.
-> * SHTV3 sensor. Measurement range: Temperature -40°C to +125°C, Humidity 0 to 100 %RH. Power supply: 1.8V to 3.6V
-> * IST3055NA0 LCD controller 
+> * TLSR8251F512ET24 (TLSR8258 in 24-pin TQFN). SoC: TC32 32-bit MCU 48Mhz, 64 KiB SRAM, 512 KiB Flash (GD25LE40C), Bluetooth 5.0: Mesh, 6LoWPAN, Zigbee, RF4CE, HomeKit, Long Range, Operating temperature: -40ï¿½C to +85ï¿½C, Power supply: 1.8V to 3.6V.
+> * SHTV3 sensor. Measurement range: Temperature -40ï¿½C to +125ï¿½C, Humidity 0 to 100 %RH. Power supply: 1.8V to 3.6V
+> * IST3055NA0 LCD controller
 
 [LYWSD03MMC B1.4 BoardPinout](https://github.com/pvvx/ATC_MiThermometer/blob/master/BoardPinout)
 
@@ -311,7 +318,7 @@ For CGG1 - GPIO_PD3, MHO_C401 - no free pins.
 1. Go to [wiki.telink-semi.cn](http://wiki.telink-semi.cn/wiki/IDE-and-Tools/IDE-for-TLSR8-Chips/) and get the IDE for TLSR8 Chips.
 2. Clone https://github.com/Ai-Thinker-Open/Telink_825X_SDK
 3. Install the IDE and import the 'ATC_MiThermometer' project
-4. Change 'Linked resource' and 'C/C++ Build/Build command'. 
+4. Change 'Linked resource' and 'C/C++ Build/Build command'.
 5. Compile the project
 
 
