@@ -1,5 +1,5 @@
 all:
-	mkdir out
+	mkdir -p out
 	podman run --rm -ti \
 	-v $$(pwd):/code \
 	-w /code \
